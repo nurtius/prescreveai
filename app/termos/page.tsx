@@ -1,76 +1,89 @@
-"use client"
+import type { Metadata } from "next"
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileText, ArrowLeft, Users } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
+export const metadata: Metadata = {
+  title: "Termos de Uso",
+  description: "Termos de uso e condições do serviço",
+}
 
 export default function TermosPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-950 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/30 via-transparent to-emerald-900/20" />
-      <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-slate-900/50 to-blue-950/40" />
+    <div className="min-h-screen bg-white">
+      <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <div className="prose prose-gray max-w-none">
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">Termos de Uso</h1>
 
-      <div className="relative z-10">
-        {/* Header */}
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-3">
-              <Image src="/prescreve-ai-logo.png" alt="Prescreve AI" width={40} height={40} className="rounded-xl" />
-              <span className="text-xl font-bold text-white">Prescreve AI</span>
-            </Link>
-            <Link href="/">
-              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Voltar ao Início
-              </Button>
-            </Link>
+          <div className="space-y-6">
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">1. Aceitação dos Termos</h2>
+              <p className="text-gray-600 leading-relaxed">
+                Ao acessar e usar este serviço, você aceita e concorda em estar vinculado aos termos e condições deste
+                acordo. Se você não concordar com qualquer parte destes termos, não deve usar nosso serviço.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">2. Uso do Serviço</h2>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Você concorda em usar o serviço apenas para fins legais e de acordo com estes Termos de Uso. Você
+                concorda em não usar o serviço:
+              </p>
+              <ul className="list-disc list-inside text-gray-600 space-y-2">
+                <li>De qualquer forma que viole leis ou regulamentos aplicáveis</li>
+                <li>Para transmitir material prejudicial, ofensivo ou inadequado</li>
+                <li>Para interferir ou interromper o serviço ou servidores</li>
+                <li>Para tentar obter acesso não autorizado ao serviço</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">3. Privacidade</h2>
+              <p className="text-gray-600 leading-relaxed">
+                Sua privacidade é importante para nós. Nossa Política de Privacidade explica como coletamos, usamos e
+                protegemos suas informações quando você usa nosso serviço.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">4. Propriedade Intelectual</h2>
+              <p className="text-gray-600 leading-relaxed">
+                O serviço e seu conteúdo original, recursos e funcionalidades são e permanecerão propriedade exclusiva
+                da empresa e seus licenciadores. O serviço é protegido por direitos autorais, marcas registradas e
+                outras leis.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">5. Limitação de Responsabilidade</h2>
+              <p className="text-gray-600 leading-relaxed">
+                Em nenhum caso a empresa será responsável por quaisquer danos indiretos, incidentais, especiais,
+                consequenciais ou punitivos, incluindo, sem limitação, perda de lucros, dados, uso, boa vontade ou
+                outras perdas intangíveis.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">6. Modificações dos Termos</h2>
+              <p className="text-gray-600 leading-relaxed">
+                Reservamo-nos o direito, a nosso exclusivo critério, de modificar ou substituir estes Termos a qualquer
+                momento. Se uma revisão for material, tentaremos fornecer pelo menos 30 dias de aviso antes de quaisquer
+                novos termos entrarem em vigor.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">7. Contato</h2>
+              <p className="text-gray-600 leading-relaxed">
+                Se você tiver alguma dúvida sobre estes Termos de Uso, entre em contato conosco através dos canais de
+                comunicação disponíveis em nosso site.
+              </p>
+            </section>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-gray-200">
+            <p className="text-sm text-gray-500">Última atualização: {new Date().toLocaleDateString("pt-BR")}</p>
           </div>
         </div>
-
-        {/* Content */}
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="w-8 h-8 text-emerald-400" />
-              </div>
-              <h1 className="text-4xl font-bold text-white mb-4">Termos de Uso</h1>
-              <p className="text-xl text-slate-300">Prescreve AI - Condições de Utilização</p>
-            </div>
-
-            <div className="space-y-8">
-              <Card className="bg-white/10 backdrop-blur-xl border-white/20">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center">
-                    <Users className="w-6 h-6 mr-3 text-emerald-400" />
-                    Aceitação dos Termos
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-slate-300 space-y-4">
-                  <p>Ao acessar e utilizar o Prescreve AI, você declara que:</p>
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Leu, compreendeu e concorda com estes termos</li>
-                    <li>É maior de 18 anos e capaz juridicamente</li>
-                    <li>É profissional de saúde ou estudante de medicina</li>
-                    <li>Utilizará o serviço de forma ética e responsável</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white/10 backdrop-blur-xl border-white/20">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center">
-                    <FileText className="w-6 h-6 mr-3 text-blue-400" />
-                    Descrição do Serviço
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-slate-300 space-y-4">
-                  <p>O Prescreve AI é uma plataforma que oferece:</p>
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Consultas sobre prescrições médicas via inteligência artificial</li>
-                    <li>Histórico de consultas realizadas</li>
-                    <li>Suporte técnico via email</li>
-                    <li>Acesso mediante assinatura mensal\
+      </div>
+    </div>
+  )
+}
