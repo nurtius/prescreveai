@@ -46,32 +46,29 @@ interface Conversation {
 // Componente para renderizar HTML da IA de forma segura e responsiva
 function HtmlMedicalResponse({ content }: { content: string }) {
   return (
-    <Card className="bg-white/95 backdrop-blur-xl border border-slate-200/50 p-4 sm:p-6 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 w-full overflow-hidden">
+    <Card className="bg-white/98 backdrop-blur-xl border-2 border-slate-300/80 p-4 sm:p-6 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 w-full overflow-hidden">
       <div className="flex items-start space-x-3 sm:space-x-4">
-        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
-          <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
+        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500/30 to-emerald-600/30 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm border border-emerald-200">
+          <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-700" />
         </div>
         <div className="flex-1 min-w-0 overflow-hidden">
           <div
-            className="prose prose-sm max-w-none text-slate-700 leading-relaxed
-                       prose-headings:text-slate-800 prose-headings:font-semibold
-                       prose-h2:text-base sm:prose-h2:text-lg prose-h2:mt-3 sm:prose-h2:mt-4 prose-h2:mb-2 sm:prose-h2:mb-3
-                       prose-h3:text-sm sm:prose-h3:text-base prose-h3:mt-2 sm:prose-h3:mt-3 prose-h3:mb-1 sm:prose-h3:mb-2
-                       prose-p:mb-2 sm:prose-p:mb-3 prose-ul:my-1 sm:prose-ul:my-2 prose-ol:my-1 sm:prose-ol:my-2
-                       prose-li:my-0.5 sm:prose-li:my-1 prose-table:my-2 sm:prose-table:my-3
-                       prose-th:border prose-th:border-slate-300 prose-th:bg-slate-50 prose-th:p-1 sm:prose-th:p-2 prose-th:text-xs sm:prose-th:text-sm
-                       prose-td:border prose-td:border-slate-300 prose-td:p-1 sm:prose-td:p-2 prose-td:text-xs sm:prose-td:text-sm
-                       prose-strong:font-semibold prose-strong:text-slate-800
-                       prose-table:w-full prose-table:table-auto prose-table:text-xs sm:prose-table:text-sm
-                       [&_table]:w-full [&_table]:table-auto [&_table]:text-xs sm:[&_table]:text-sm [&_table]:break-words
-                       [&_td]:break-words [&_td]:max-w-0 [&_td]:overflow-hidden
-                       [&_th]:break-words [&_th]:max-w-0"
+            className="prose prose-sm max-w-none text-slate-800 leading-relaxed
+                   prose-headings:text-slate-900 prose-headings:font-semibold
+                   prose-h2:text-base sm:prose-h2:text-lg prose-h2:mt-3 sm:prose-h2:mt-4 prose-h2:mb-2 sm:prose-h2:mb-3
+                   prose-h3:text-sm sm:prose-h3:text-base prose-h3:mt-2 sm:prose-h3:mt-3 prose-h3:mb-1 sm:prose-h3:mb-2
+                   prose-p:mb-2 sm:prose-p:mb-3 prose-ul:my-1 sm:prose-ul:my-2 prose-ol:my-1 sm:prose-ol:my-2
+                   prose-li:my-0.5 sm:prose-li:my-1 prose-table:my-2 sm:prose-table:my-3
+                   prose-strong:font-semibold prose-strong:text-slate-900
+                   [&_table]:w-full [&_table]:table-auto [&_table]:text-xs sm:[&_table]:text-sm [&_table]:break-words [&_table]:border-2 [&_table]:border-slate-600
+                   [&_td]:break-words [&_td]:max-w-0 [&_td]:overflow-hidden [&_td]:border [&_td]:border-slate-500 [&_td]:bg-white [&_td]:text-slate-800 [&_td]:p-2
+                   [&_th]:break-words [&_th]:max-w-0 [&_th]:border [&_th]:border-slate-600 [&_th]:bg-slate-100 [&_th]:text-slate-900 [&_th]:font-semibold [&_th]:p-2"
             dangerouslySetInnerHTML={{ __html: content }}
           />
 
           {/* Disclaimer discreto */}
-          <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-100">
-            <p className="text-xs text-slate-400 leading-relaxed">
+          <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-200">
+            <p className="text-xs text-slate-500 leading-relaxed">
               <em>
                 Este aplicativo tem apenas a função de facilitar a prática médica, lembre-se que podem existir erros e
                 não deve ser utilizado como fonte primária de pesquisa. Considere verificar informações importantes. Uso

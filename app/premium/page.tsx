@@ -137,7 +137,7 @@ export default function PremiumPage() {
 
             {/* Pricing Card */}
             <div className="max-w-md mx-auto mb-12 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-600">
-              <Card className="bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 backdrop-blur-xl border-emerald-400/30 shadow-2xl">
+              <Card className="bg-white/95 backdrop-blur-xl border-2 border-emerald-400/60 shadow-2xl">
                 <CardHeader className="text-center pb-4">
                   <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Crown className="w-8 h-8 text-emerald-400" />
@@ -192,7 +192,7 @@ export default function PremiumPage() {
               {features.map((feature, index) => (
                 <Card
                   key={index}
-                  className="bg-white/10 backdrop-blur-xl border-white/20 hover:bg-white/15 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
+                  className="bg-white/90 backdrop-blur-xl border-2 border-white/40 hover:bg-white/95 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <CardContent className="p-4 sm:p-6">
@@ -219,7 +219,7 @@ export default function PremiumPage() {
               {testimonials.map((testimonial, index) => (
                 <Card
                   key={index}
-                  className="bg-white/10 backdrop-blur-xl border-white/20 hover:bg-white/15 transition-all duration-300"
+                  className="bg-white/90 backdrop-blur-xl border-2 border-white/40 hover:bg-white/95 transition-all duration-300"
                 >
                   <CardContent className="p-4 sm:p-6">
                     <div className="flex items-center space-x-1 mb-3 sm:mb-4">
@@ -242,7 +242,7 @@ export default function PremiumPage() {
         {/* Contact Options */}
         <div className="container mx-auto px-4 py-12 sm:py-16">
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-gradient-to-r from-blue-500/20 to-emerald-500/20 backdrop-blur-xl border-white/20">
+            <Card className="bg-white/90 backdrop-blur-xl border-2 border-white/40">
               <CardContent className="p-6 sm:p-8">
                 <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-6 sm:mb-8">
                   Precisa de ajuda? Entre em contato
@@ -282,7 +282,7 @@ export default function PremiumPage() {
         {/* Final CTA */}
         <div className="container mx-auto px-4 py-12 sm:py-16">
           <div className="max-w-4xl mx-auto text-center">
-            <Card className="bg-gradient-to-r from-emerald-500/20 to-emerald-600/20 backdrop-blur-xl border-emerald-400/30">
+            <Card className="bg-white/95 backdrop-blur-xl border-2 border-emerald-400/60">
               <CardContent className="p-6 sm:p-8">
                 <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Sparkles className="w-8 h-8 text-emerald-400" />

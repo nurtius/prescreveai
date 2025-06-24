@@ -90,17 +90,27 @@
   @apply border-l-4 border-emerald-300 bg-emerald-50 pl-4 py-2 mb-4 italic;
 }
 
+/* CORREÇÃO: Tabelas com bordas visíveis */
 .markdown-content table {
-  @apply w-full border-collapse border border-slate-200 rounded-lg mb-4;
+  @apply w-full border-collapse mb-4;
+  border: 2px solid #334155 !important; /* Borda externa mais forte */
 }
 
 .markdown-content th,
 .markdown-content td {
-  @apply border border-slate-200 px-4 py-2;
+  @apply px-3 py-2 text-sm;
+  border: 1px solid #475569 !important; /* Bordas internas visíveis */
+  background-color: white !important;
 }
 
 .markdown-content th {
-  @apply bg-slate-50 font-semibold;
+  @apply font-semibold;
+  background-color: #f1f5f9 !important; /* Cabeçalho com fundo */
+  color: #1e293b !important;
+}
+
+.markdown-content td {
+  color: #334155 !important; /* Texto das células mais escuro */
 }
 
 .markdown-content a {
