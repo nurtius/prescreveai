@@ -46,23 +46,26 @@ interface Conversation {
 // Componente para renderizar HTML da IA de forma segura e responsiva
 function HtmlMedicalResponse({ content }: { content: string }) {
   return (
-    <Card className="bg-white/98 backdrop-blur-xl border-2 border-slate-300/80 p-4 sm:p-6 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 w-full overflow-hidden">
+    <Card className="bg-white border-2 border-slate-300 p-4 sm:p-6 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 w-full overflow-hidden">
       <div className="flex items-start space-x-3 sm:space-x-4">
-        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500/30 to-emerald-600/30 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm border border-emerald-200">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-emerald-200">
           <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-700" />
         </div>
         <div className="flex-1 min-w-0 overflow-hidden">
           <div
-            className="prose prose-sm max-w-none text-slate-800 leading-relaxed
-                   prose-headings:text-slate-900 prose-headings:font-semibold
-                   prose-h2:text-base sm:prose-h2:text-lg prose-h2:mt-3 sm:prose-h2:mt-4 prose-h2:mb-2 sm:prose-h2:mb-3
-                   prose-h3:text-sm sm:prose-h3:text-base prose-h3:mt-2 sm:prose-h3:mt-3 prose-h3:mb-1 sm:prose-h3:mb-2
-                   prose-p:mb-2 sm:prose-p:mb-3 prose-ul:my-1 sm:prose-ul:my-2 prose-ol:my-1 sm:prose-ol:my-2
-                   prose-li:my-0.5 sm:prose-li:my-1 prose-table:my-2 sm:prose-table:my-3
-                   prose-strong:font-semibold prose-strong:text-slate-900
-                   [&_table]:w-full [&_table]:table-auto [&_table]:text-xs sm:[&_table]:text-sm [&_table]:break-words [&_table]:border-2 [&_table]:border-slate-600
-                   [&_td]:break-words [&_td]:max-w-0 [&_td]:overflow-hidden [&_td]:border [&_td]:border-slate-500 [&_td]:bg-white [&_td]:text-slate-800 [&_td]:p-2
-                   [&_th]:break-words [&_th]:max-w-0 [&_th]:border [&_th]:border-slate-600 [&_th]:bg-slate-100 [&_th]:text-slate-900 [&_th]:font-semibold [&_th]:p-2"
+            className="prose prose-sm max-w-none text-slate-900 leading-relaxed
+                   prose-headings:text-slate-900 prose-headings:font-bold
+                   prose-h1:text-xl prose-h1:font-bold prose-h1:text-slate-900 prose-h1:mb-4 prose-h1:mt-2
+                   prose-h2:text-lg prose-h2:font-bold prose-h2:text-slate-900 prose-h2:mb-3 prose-h2:mt-4
+                   prose-h3:text-base prose-h3:font-bold prose-h3:text-slate-900 prose-h3:mb-2 prose-h3:mt-3
+                   prose-h4:text-sm prose-h4:font-bold prose-h4:text-slate-900 prose-h4:mb-2 prose-h4:mt-2
+                   prose-p:mb-3 prose-p:text-slate-800 prose-p:leading-relaxed
+                   prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-li:text-slate-800
+                   prose-strong:font-bold prose-strong:text-slate-900
+                   prose-em:italic prose-em:text-slate-700
+                   [&_table]:w-full [&_table]:table-auto [&_table]:text-sm [&_table]:break-words [&_table]:border-2 [&_table]:border-slate-700 [&_table]:my-4
+                   [&_td]:break-words [&_td]:max-w-0 [&_td]:overflow-hidden [&_td]:border [&_td]:border-slate-600 [&_td]:bg-white [&_td]:text-slate-900 [&_td]:p-3 [&_td]:font-medium
+                   [&_th]:break-words [&_th]:max-w-0 [&_th]:border [&_th]:border-slate-700 [&_th]:bg-slate-200 [&_th]:text-slate-900 [&_th]:font-bold [&_th]:p-3"
             dangerouslySetInnerHTML={{ __html: content }}
           />
 
