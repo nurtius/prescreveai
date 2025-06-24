@@ -166,20 +166,41 @@ function HtmlMedicalResponse({ content }: { content: string }) {
               .medical-response table {
                 min-width: 500px !important;
                 font-size: 11px !important;
-                display: block !important;
+                display: table !important;
                 overflow-x: auto !important;
                 white-space: nowrap !important;
                 -webkit-overflow-scrolling: touch !important;
                 border: 2px solid #334155 !important;
                 border-radius: 8px !important;
+                /* Adicionar container com scroll */
+                width: 100% !important;
+                max-width: 100% !important;
               }
-              
+
+              /* Wrapper para permitir scroll horizontal */
+              .medical-response {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                /* Apenas para tabelas */
+              }
+
+              .medical-response table {
+                /* Forçar scroll horizontal */
+                display: block !important;
+                overflow-x: auto !important;
+                white-space: nowrap !important;
+                -webkit-overflow-scrolling: touch !important;
+                width: 100% !important;
+                min-width: 500px !important;
+              }
+
               .medical-response thead,
               .medical-response tbody,
               .medical-response tr {
                 display: table !important;
                 width: 100% !important;
                 table-layout: fixed !important;
+                min-width: 500px !important;
               }
               
               .medical-response th,
@@ -301,6 +322,36 @@ export default function DashboardPage() {
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [sidebarOpen])
+
+  // Effect para garantir scroll horizontal nas tabelas
+  useEffect(() => {
+    const enableTableScroll = () => {
+      const tables = document.querySelectorAll(".medical-response table")
+      tables.forEach((table) => {
+        // Garantir que a tabela tenha scroll horizontal
+        table.style.display = "block"
+        table.style.overflowX = "auto"
+        table.style.webkitOverflowScrolling = "touch"
+        table.style.minWidth = "500px"
+        table.style.width = "100%"
+
+        // Adicionar indicador visual de scroll
+        table.style.cursor = "grab"
+
+        table.addEventListener("mousedown", () => {
+          table.style.cursor = "grabbing"
+        })
+
+        table.addEventListener("mouseup", () => {
+          table.style.cursor = "grab"
+        })
+      })
+    }
+
+    // Executar após renderização
+    const timeoutId = setTimeout(enableTableScroll, 200)
+    return () => clearTimeout(timeoutId)
+  }, [messages])
 
   if (loading) {
     return (
