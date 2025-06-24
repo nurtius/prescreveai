@@ -55,11 +55,17 @@ function HtmlMedicalResponse({ content }: { content: string }) {
       '<h3 style="font-weight: bold; font-size: 1.1rem; color: #1e293b; margin: 16px 0 8px 0;">$1</h3>',
     )
 
-    // Garantir que listas tenham formatação adequada
-    processed = processed.replace(/^[\s]*[-•]\s*(.+)$/gm, '<li style="margin: 4px 0; color: #334155;">$1</li>')
+    // Garantir que listas tenham formatação adequada com bullets
+    processed = processed.replace(
+      /^[\s]*[-•]\s*(.+)$/gm,
+      '<li style="margin: 4px 0; color: #334155; list-style-type: disc; margin-left: 20px;">$1</li>',
+    )
 
     // Envolver listas em ul
-    processed = processed.replace(/(<li[^>]*>.*?<\/li>)/gs, '<ul style="margin: 8px 0; padding-left: 20px;">$1</ul>')
+    processed = processed.replace(
+      /(<li[^>]*>.*?<\/li>)/gs,
+      '<ul style="margin: 8px 0; padding-left: 20px; list-style-type: disc;">$1</ul>',
+    )
 
     return processed
   }
@@ -107,11 +113,14 @@ function HtmlMedicalResponse({ content }: { content: string }) {
             .medical-response ol {
               margin: 8px 0;
               padding-left: 20px;
+              list-style-type: disc;
             }
             
             .medical-response li {
               margin: 4px 0;
               color: #334155;
+              list-style-type: disc;
+              display: list-item;
             }
             
             .medical-response strong {
@@ -119,12 +128,32 @@ function HtmlMedicalResponse({ content }: { content: string }) {
               color: #1e293b;
             }
             
+            /* Container da tabela com scroll horizontal */
             .medical-response table {
               width: 100%;
               border-collapse: collapse;
               margin: 16px 0;
               font-size: 12px;
               border: 2px solid #334155;
+              display: table;
+            }
+            
+            /* Wrapper para scroll horizontal */
+            .medical-response table {
+              min-width: 100%;
+            }
+            
+            @media (max-width: 639px) {
+              .medical-response {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+              }
+              
+              .medical-response table {
+                min-width: 500px;
+                display: table;
+                border-collapse: collapse;
+              }
             }
             
             @media (min-width: 640px) {
@@ -139,12 +168,13 @@ function HtmlMedicalResponse({ content }: { content: string }) {
             
             .medical-response th,
             .medical-response td {
-              border: 1px solid #475569;
+              border: 1px solid #475569 !important;
               padding: 8px 6px;
               text-align: left;
               vertical-align: top;
               word-wrap: break-word;
               line-height: 1.3;
+              background-clip: padding-box;
             }
             
             @media (min-width: 640px) {
@@ -155,10 +185,11 @@ function HtmlMedicalResponse({ content }: { content: string }) {
             }
             
             .medical-response th {
-              background-color: #f1f5f9;
+              background-color: #f1f5f9 !important;
               font-weight: bold;
               color: #1e293b;
               font-size: 11px;
+              border: 1px solid #475569 !important;
             }
             
             @media (min-width: 640px) {
@@ -168,39 +199,44 @@ function HtmlMedicalResponse({ content }: { content: string }) {
             }
             
             .medical-response td {
-              background-color: white;
+              background-color: white !important;
               color: #1e293b;
               font-weight: 500;
+              border: 1px solid #475569 !important;
             }
             
-            /* Responsividade para mobile */
+            /* Responsividade específica para mobile */
             @media (max-width: 639px) {
-              .medical-response table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch;
-                max-width: 100%;
-              }
-              
               .medical-response th,
               .medical-response td {
-                min-width: 70px;
-                max-width: 100px;
+                min-width: 80px;
                 font-size: 10px;
                 padding: 6px 4px;
+                white-space: nowrap;
               }
               
               .medical-response th:first-child,
               .medical-response td:first-child {
-                min-width: 60px;
-                max-width: 80px;
+                min-width: 90px;
+                position: sticky;
+                left: 0;
+                background-color: #f8fafc !important;
+                z-index: 1;
+              }
+              
+              .medical-response th:nth-child(2),
+              .medical-response td:nth-child(2) {
+                min-width: 70px;
+              }
+              
+              .medical-response th:nth-child(3),
+              .medical-response td:nth-child(3) {
+                min-width: 120px;
               }
               
               .medical-response th:last-child,
               .medical-response td:last-child {
-                min-width: 80px;
-                max-width: 120px;
+                min-width: 100px;
               }
             }
           `}</style>
