@@ -325,7 +325,9 @@ export default function HomePage() {
                 <CardContent className="p-6 sm:p-8">
                   <Clock className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400 mx-auto mb-4" />
                   <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">24/7</h3>
-                  <p className="text-slate-300">{"Disponibilidade -\nEm qualquer celular, sem baixar nenhum aplicativo"} </p>
+                  <p className="text-slate-300">
+                    {"Disponibilidade -\nEm qualquer celular, sem baixar nenhum aplicativo"}{" "}
+                  </p>
                 </CardContent>
               </Card>
 
@@ -510,7 +512,7 @@ export default function HomePage() {
         {/* CTA Section */}
         <section className="container mx-auto px-4 py-12 sm:py-20">
           <div className="max-w-5xl mx-auto text-center animate-in fade-in slide-in-from-bottom duration-1000">
-            <Card className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-white/20 hover:scale-105 transition-all duration-500">
+            <Card className="bg-slate-800 border-2 border-slate-600 hover:scale-105 transition-all duration-500">
               <CardContent className="p-8 sm:p-16">
                 <div className="mb-6 sm:mb-8">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">

@@ -45,6 +45,25 @@ interface Conversation {
 
 // Componente para renderizar HTML da IA de forma segura e responsiva
 function HtmlMedicalResponse({ content }: { content: string }) {
+  // Processar o conteúdo para garantir formatação adequada
+  const processContent = (htmlContent: string) => {
+    let processed = htmlContent
+
+    // Garantir que títulos principais tenham formatação adequada
+    processed = processed.replace(
+      /(Orientações gerais|Medicação$$ões$$ Recomendada$$s$$|Contraindicações|Efeitos colaterais|Monitoramento|Posologia|Administração)/gi,
+      '<h3 style="font-weight: bold; font-size: 1.1rem; color: #1e293b; margin: 16px 0 8px 0;">$1</h3>',
+    )
+
+    // Garantir que listas tenham formatação adequada
+    processed = processed.replace(/^[\s]*[-•]\s*(.+)$/gm, '<li style="margin: 4px 0; color: #334155;">$1</li>')
+
+    // Envolver listas em ul
+    processed = processed.replace(/(<li[^>]*>.*?<\/li>)/gs, '<ul style="margin: 8px 0; padding-left: 20px;">$1</ul>')
+
+    return processed
+  }
+
   return (
     <Card className="bg-white border-2 border-slate-300 p-4 sm:p-6 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 w-full overflow-hidden">
       <div className="flex items-start space-x-3 sm:space-x-4">
@@ -52,157 +71,136 @@ function HtmlMedicalResponse({ content }: { content: string }) {
           <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-700" />
         </div>
         <div className="flex-1 min-w-0 overflow-hidden">
-          <div
-            className="prose prose-sm max-w-none text-slate-900 leading-relaxed
-                   prose-headings:text-slate-900 prose-headings:font-bold
-                   prose-h1:text-xl prose-h1:font-bold prose-h1:text-slate-900 prose-h1:mb-4 prose-h1:mt-2
-                   prose-h2:text-lg prose-h2:font-bold prose-h2:text-slate-900 prose-h2:mb-3 prose-h2:mt-4
-                   prose-h3:text-base prose-h3:font-bold prose-h3:text-slate-900 prose-h3:mb-2 prose-h3:mt-3
-                   prose-h4:text-sm prose-h4:font-bold prose-h4:text-slate-900 prose-h4:mb-2 prose-h4:mt-2
-                   prose-p:mb-3 prose-p:text-slate-800 prose-p:leading-relaxed
-                   prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-li:text-slate-800
-                   prose-strong:font-bold prose-strong:text-slate-900
-                   prose-em:italic prose-em:text-slate-700"
-            dangerouslySetInnerHTML={{ __html: content }}
-            style={{
-              // Estilos específicos para tabelas responsivas
-              "--table-styles": `
-                table {
-                  width: 100% !important;
-                  border-collapse: collapse !important;
-                  border: 2px solid #334155 !important;
-                  margin: 16px 0 !important;
-                  font-size: 12px !important;
-                }
-                @media (min-width: 640px) {
-                  table {
-                    font-size: 14px !important;
-                  }
-                }
-                th, td {
-                  border: 1px solid #475569 !important;
-                  padding: 8px 6px !important;
-                  text-align: left !important;
-                  vertical-align: top !important;
-                  word-wrap: break-word !important;
-                  hyphens: auto !important;
-                  line-height: 1.3 !important;
-                }
-                @media (min-width: 640px) {
-                  th, td {
-                    padding: 12px 8px !important;
-                  }
-                }
-                th {
-                  background-color: #f1f5f9 !important;
-                  font-weight: bold !important;
-                  color: #1e293b !important;
-                  font-size: 11px !important;
-                }
-                @media (min-width: 640px) {
-                  th {
-                    font-size: 13px !important;
-                  }
-                }
-                td {
-                  background-color: white !important;
-                  color: #1e293b !important;
-                  font-weight: 500 !important;
-                }
-                /* Responsividade específica para mobile */
-                @media (max-width: 639px) {
-                  table {
-                    display: block !important;
-                    overflow-x: auto !important;
-                    white-space: nowrap !important;
-                    -webkit-overflow-scrolling: touch !important;
-                  }
-                  th, td {
-                    min-width: 80px !important;
-                    max-width: 120px !important;
-                  }
-                  th:first-child, td:first-child {
-                    min-width: 70px !important;
-                    max-width: 90px !important;
-                  }
-                  th:last-child, td:last-child {
-                    min-width: 100px !important;
-                    max-width: 140px !important;
-                  }
-                }
-              `,
-            }}
-          />
+          <div className="medical-response" dangerouslySetInnerHTML={{ __html: processContent(content) }} />
 
-          {/* Estilos CSS injetados para tabelas */}
+          {/* Estilos CSS específicos para a resposta médica */}
           <style jsx>{`
-            :global(.prose table) {
-              width: 100% !important;
-              border-collapse: collapse !important;
-              border: 2px solid #334155 !important;
-              margin: 16px 0 !important;
-              font-size: 12px !important;
+            .medical-response {
+              color: #1e293b;
+              line-height: 1.6;
+              font-size: 14px;
             }
-            :global(.prose table) {
-              display: block;
-              overflow-x: auto;
-              white-space: nowrap;
-              -webkit-overflow-scrolling: touch;
+            
+            .medical-response h1,
+            .medical-response h2,
+            .medical-response h3,
+            .medical-response h4 {
+              font-weight: bold;
+              color: #1e293b;
+              margin: 16px 0 8px 0;
             }
+            
+            .medical-response h2 {
+              font-size: 1.2rem;
+            }
+            
+            .medical-response h3 {
+              font-size: 1.1rem;
+            }
+            
+            .medical-response p {
+              margin: 8px 0;
+              color: #334155;
+            }
+            
+            .medical-response ul,
+            .medical-response ol {
+              margin: 8px 0;
+              padding-left: 20px;
+            }
+            
+            .medical-response li {
+              margin: 4px 0;
+              color: #334155;
+            }
+            
+            .medical-response strong {
+              font-weight: bold;
+              color: #1e293b;
+            }
+            
+            .medical-response table {
+              width: 100%;
+              border-collapse: collapse;
+              margin: 16px 0;
+              font-size: 12px;
+              border: 2px solid #334155;
+            }
+            
             @media (min-width: 640px) {
-              :global(.prose table) {
-                font-size: 14px !important;
-                display: table;
-                white-space: normal;
+              .medical-response {
+                font-size: 15px;
+              }
+              
+              .medical-response table {
+                font-size: 13px;
               }
             }
-            :global(.prose th), :global(.prose td) {
-              border: 1px solid #475569 !important;
-              padding: 8px 6px !important;
-              text-align: left !important;
-              vertical-align: top !important;
-              word-wrap: break-word !important;
-              hyphens: auto !important;
-              line-height: 1.3 !important;
-              min-width: 80px !important;
-              max-width: 120px !important;
+            
+            .medical-response th,
+            .medical-response td {
+              border: 1px solid #475569;
+              padding: 8px 6px;
+              text-align: left;
+              vertical-align: top;
+              word-wrap: break-word;
+              line-height: 1.3;
             }
+            
             @media (min-width: 640px) {
-              :global(.prose th), :global(.prose td) {
-                padding: 12px 8px !important;
-                min-width: auto !important;
-                max-width: none !important;
+              .medical-response th,
+              .medical-response td {
+                padding: 10px 8px;
               }
             }
-            :global(.prose th) {
-              background-color: #f1f5f9 !important;
-              font-weight: bold !important;
-              color: #1e293b !important;
-              font-size: 11px !important;
+            
+            .medical-response th {
+              background-color: #f1f5f9;
+              font-weight: bold;
+              color: #1e293b;
+              font-size: 11px;
             }
+            
             @media (min-width: 640px) {
-              :global(.prose th) {
-                font-size: 13px !important;
+              .medical-response th {
+                font-size: 12px;
               }
             }
-            :global(.prose td) {
-              background-color: white !important;
-              color: #1e293b !important;
-              font-weight: 500 !important;
+            
+            .medical-response td {
+              background-color: white;
+              color: #1e293b;
+              font-weight: 500;
             }
-            :global(.prose th:first-child), :global(.prose td:first-child) {
-              min-width: 70px !important;
-              max-width: 90px !important;
-            }
-            :global(.prose th:last-child), :global(.prose td:last-child) {
-              min-width: 100px !important;
-              max-width: 140px !important;
-            }
-            @media (min-width: 640px) {
-              :global(.prose th:first-child), :global(.prose td:first-child),
-              :global(.prose th:last-child), :global(.prose td:last-child) {
-                min-width: auto !important;
-                max-width: none !important;
+            
+            /* Responsividade para mobile */
+            @media (max-width: 639px) {
+              .medical-response table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                max-width: 100%;
+              }
+              
+              .medical-response th,
+              .medical-response td {
+                min-width: 70px;
+                max-width: 100px;
+                font-size: 10px;
+                padding: 6px 4px;
+              }
+              
+              .medical-response th:first-child,
+              .medical-response td:first-child {
+                min-width: 60px;
+                max-width: 80px;
+              }
+              
+              .medical-response th:last-child,
+              .medical-response td:last-child {
+                min-width: 80px;
+                max-width: 120px;
               }
             }
           `}</style>

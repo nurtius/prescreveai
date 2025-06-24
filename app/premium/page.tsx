@@ -25,7 +25,7 @@ import Image from "next/image"
 export default function PremiumPage() {
   const handleCheckout = () => {
     // Redirecionar para checkout TriboPay
-    window.open("https://checkout.tribopay.com.br/prescreve-ai-premium", "_blank")
+    window.open("https://go.tribopay.com.br/wrhth59tsv", "_blank")
   }
 
   const features = [
