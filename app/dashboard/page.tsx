@@ -62,12 +62,150 @@ function HtmlMedicalResponse({ content }: { content: string }) {
                    prose-p:mb-3 prose-p:text-slate-800 prose-p:leading-relaxed
                    prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-li:text-slate-800
                    prose-strong:font-bold prose-strong:text-slate-900
-                   prose-em:italic prose-em:text-slate-700
-                   [&_table]:w-full [&_table]:table-auto [&_table]:text-sm [&_table]:break-words [&_table]:border-2 [&_table]:border-slate-700 [&_table]:my-4
-                   [&_td]:break-words [&_td]:max-w-0 [&_td]:overflow-hidden [&_td]:border [&_td]:border-slate-600 [&_td]:bg-white [&_td]:text-slate-900 [&_td]:p-3 [&_td]:font-medium
-                   [&_th]:break-words [&_th]:max-w-0 [&_th]:border [&_th]:border-slate-700 [&_th]:bg-slate-200 [&_th]:text-slate-900 [&_th]:font-bold [&_th]:p-3"
+                   prose-em:italic prose-em:text-slate-700"
             dangerouslySetInnerHTML={{ __html: content }}
+            style={{
+              // Estilos específicos para tabelas responsivas
+              "--table-styles": `
+                table {
+                  width: 100% !important;
+                  border-collapse: collapse !important;
+                  border: 2px solid #334155 !important;
+                  margin: 16px 0 !important;
+                  font-size: 12px !important;
+                }
+                @media (min-width: 640px) {
+                  table {
+                    font-size: 14px !important;
+                  }
+                }
+                th, td {
+                  border: 1px solid #475569 !important;
+                  padding: 8px 6px !important;
+                  text-align: left !important;
+                  vertical-align: top !important;
+                  word-wrap: break-word !important;
+                  hyphens: auto !important;
+                  line-height: 1.3 !important;
+                }
+                @media (min-width: 640px) {
+                  th, td {
+                    padding: 12px 8px !important;
+                  }
+                }
+                th {
+                  background-color: #f1f5f9 !important;
+                  font-weight: bold !important;
+                  color: #1e293b !important;
+                  font-size: 11px !important;
+                }
+                @media (min-width: 640px) {
+                  th {
+                    font-size: 13px !important;
+                  }
+                }
+                td {
+                  background-color: white !important;
+                  color: #1e293b !important;
+                  font-weight: 500 !important;
+                }
+                /* Responsividade específica para mobile */
+                @media (max-width: 639px) {
+                  table {
+                    display: block !important;
+                    overflow-x: auto !important;
+                    white-space: nowrap !important;
+                    -webkit-overflow-scrolling: touch !important;
+                  }
+                  th, td {
+                    min-width: 80px !important;
+                    max-width: 120px !important;
+                  }
+                  th:first-child, td:first-child {
+                    min-width: 70px !important;
+                    max-width: 90px !important;
+                  }
+                  th:last-child, td:last-child {
+                    min-width: 100px !important;
+                    max-width: 140px !important;
+                  }
+                }
+              `,
+            }}
           />
+
+          {/* Estilos CSS injetados para tabelas */}
+          <style jsx>{`
+            :global(.prose table) {
+              width: 100% !important;
+              border-collapse: collapse !important;
+              border: 2px solid #334155 !important;
+              margin: 16px 0 !important;
+              font-size: 12px !important;
+            }
+            :global(.prose table) {
+              display: block;
+              overflow-x: auto;
+              white-space: nowrap;
+              -webkit-overflow-scrolling: touch;
+            }
+            @media (min-width: 640px) {
+              :global(.prose table) {
+                font-size: 14px !important;
+                display: table;
+                white-space: normal;
+              }
+            }
+            :global(.prose th), :global(.prose td) {
+              border: 1px solid #475569 !important;
+              padding: 8px 6px !important;
+              text-align: left !important;
+              vertical-align: top !important;
+              word-wrap: break-word !important;
+              hyphens: auto !important;
+              line-height: 1.3 !important;
+              min-width: 80px !important;
+              max-width: 120px !important;
+            }
+            @media (min-width: 640px) {
+              :global(.prose th), :global(.prose td) {
+                padding: 12px 8px !important;
+                min-width: auto !important;
+                max-width: none !important;
+              }
+            }
+            :global(.prose th) {
+              background-color: #f1f5f9 !important;
+              font-weight: bold !important;
+              color: #1e293b !important;
+              font-size: 11px !important;
+            }
+            @media (min-width: 640px) {
+              :global(.prose th) {
+                font-size: 13px !important;
+              }
+            }
+            :global(.prose td) {
+              background-color: white !important;
+              color: #1e293b !important;
+              font-weight: 500 !important;
+            }
+            :global(.prose th:first-child), :global(.prose td:first-child) {
+              min-width: 70px !important;
+              max-width: 90px !important;
+            }
+            :global(.prose th:last-child), :global(.prose td:last-child) {
+              min-width: 100px !important;
+              max-width: 140px !important;
+            }
+            @media (min-width: 640px) {
+              :global(.prose th:first-child), :global(.prose td:first-child),
+              :global(.prose th:last-child), :global(.prose td:last-child) {
+                min-width: auto !important;
+                max-width: none !important;
+              }
+            }
+          `}</style>
 
           {/* Disclaimer discreto */}
           <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-200">
