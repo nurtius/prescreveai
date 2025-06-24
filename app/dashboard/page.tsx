@@ -49,10 +49,10 @@ function HtmlMedicalResponse({ content }: { content: string }) {
   const processContent = (htmlContent: string) => {
     let processed = htmlContent
 
-    // Garantir que títulos principais tenham formatação adequada
+    // Garantir que TODOS os títulos médicos principais tenham formatação em negrito
     processed = processed.replace(
-      /(Orientações gerais|Medicação$$ões$$ Recomendada$$s$$|Contraindicações|Efeitos colaterais|Monitoramento|Posologia|Administração)/gi,
-      '<h3 style="font-weight: bold; font-size: 1.1rem; color: #1e293b; margin: 16px 0 8px 0;">$1</h3>',
+      /(Orientações gerais|Orientacoes gerais|Medicação$$ões$$ Recomendada$$s$$|Medicacoes Recomendadas|Contraindicações|Contraindicacoes|Efeitos colaterais|Monitoramento|Posologia|Administração|Administracao|Explicação da patologia|Explicacao da patologia|Referências utilizadas|Referencias utilizadas|Diagnóstico|Diagnostico|Tratamento|Conduta|Prognóstico|Prognostico)/gi,
+      '<strong style="font-weight: bold; font-size: 1.1rem; color: #1e293b; display: block; margin: 16px 0 8px 0;">$1</strong>',
     )
 
     // Garantir que listas tenham formatação adequada com bullets
@@ -76,7 +76,7 @@ function HtmlMedicalResponse({ content }: { content: string }) {
         <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-emerald-200">
           <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-700" />
         </div>
-        <div className="flex-1 min-w-0 overflow-hidden">
+        <div className="flex-1 min-w-0">
           <div className="medical-response" dangerouslySetInnerHTML={{ __html: processContent(content) }} />
 
           {/* Estilos CSS específicos para a resposta médica */}
@@ -85,14 +85,15 @@ function HtmlMedicalResponse({ content }: { content: string }) {
               color: #1e293b;
               line-height: 1.6;
               font-size: 14px;
+              overflow: visible;
             }
             
             .medical-response h1,
             .medical-response h2,
             .medical-response h3,
             .medical-response h4 {
-              font-weight: bold;
-              color: #1e293b;
+              font-weight: bold !important;
+              color: #1e293b !important;
               margin: 16px 0 8px 0;
             }
             
@@ -109,6 +110,14 @@ function HtmlMedicalResponse({ content }: { content: string }) {
               color: #334155;
             }
             
+            .medical-response strong {
+              font-weight: bold !important;
+              color: #1e293b !important;
+              display: block;
+              margin: 16px 0 8px 0;
+              font-size: 1.1rem;
+            }
+            
             .medical-response ul,
             .medical-response ol {
               margin: 8px 0;
@@ -123,37 +132,22 @@ function HtmlMedicalResponse({ content }: { content: string }) {
               display: list-item;
             }
             
-            .medical-response strong {
-              font-weight: bold;
-              color: #1e293b;
+            /* Container específico para tabelas com scroll horizontal */
+            .medical-response .table-container {
+              overflow-x: auto;
+              -webkit-overflow-scrolling: touch;
+              margin: 16px 0;
+              border: 2px solid #334155;
+              border-radius: 8px;
             }
             
-            /* Container da tabela com scroll horizontal */
             .medical-response table {
               width: 100%;
               border-collapse: collapse;
-              margin: 16px 0;
+              margin: 0;
               font-size: 12px;
-              border: 2px solid #334155;
-              display: table;
-            }
-            
-            /* Wrapper para scroll horizontal */
-            .medical-response table {
-              min-width: 100%;
-            }
-            
-            @media (max-width: 639px) {
-              .medical-response {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-              }
-              
-              .medical-response table {
-                min-width: 500px;
-                display: table;
-                border-collapse: collapse;
-              }
+              min-width: 500px;
+              background: white;
             }
             
             @media (min-width: 640px) {
@@ -163,6 +157,11 @@ function HtmlMedicalResponse({ content }: { content: string }) {
               
               .medical-response table {
                 font-size: 13px;
+                min-width: auto;
+              }
+              
+              .medical-response .table-container {
+                overflow-x: visible;
               }
             }
             
@@ -186,8 +185,8 @@ function HtmlMedicalResponse({ content }: { content: string }) {
             
             .medical-response th {
               background-color: #f1f5f9 !important;
-              font-weight: bold;
-              color: #1e293b;
+              font-weight: bold !important;
+              color: #1e293b !important;
               font-size: 11px;
               border: 1px solid #475569 !important;
             }
@@ -200,7 +199,7 @@ function HtmlMedicalResponse({ content }: { content: string }) {
             
             .medical-response td {
               background-color: white !important;
-              color: #1e293b;
+              color: #1e293b !important;
               font-weight: 500;
               border: 1px solid #475569 !important;
             }
@@ -222,6 +221,7 @@ function HtmlMedicalResponse({ content }: { content: string }) {
                 left: 0;
                 background-color: #f8fafc !important;
                 z-index: 1;
+                border-right: 2px solid #475569 !important;
               }
               
               .medical-response th:nth-child(2),
@@ -240,6 +240,27 @@ function HtmlMedicalResponse({ content }: { content: string }) {
               }
             }
           `}</style>
+
+          {/* Script para envolver tabelas em containers com scroll */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                if (typeof window !== 'undefined') {
+                  setTimeout(() => {
+                    const tables = document.querySelectorAll('.medical-response table');
+                    tables.forEach(table => {
+                      if (!table.parentElement.classList.contains('table-container')) {
+                        const container = document.createElement('div');
+                        container.className = 'table-container';
+                        table.parentNode.insertBefore(container, table);
+                        container.appendChild(table);
+                      }
+                    });
+                  }, 100);
+                }
+              `,
+            }}
+          />
 
           {/* Disclaimer discreto */}
           <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-200">
@@ -317,6 +338,32 @@ export default function DashboardPage() {
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [sidebarOpen])
+
+  // Effect para processar tabelas após renderização
+  useEffect(() => {
+    const processTablesAfterRender = () => {
+      const tables = document.querySelectorAll(".medical-response table")
+      tables.forEach((table) => {
+        if (!table.parentElement?.classList.contains("table-container")) {
+          const container = document.createElement("div")
+          container.className = "table-container"
+          container.style.cssText = `
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 16px 0;
+            border: 2px solid #334155;
+            border-radius: 8px;
+          `
+          table.parentNode?.insertBefore(container, table)
+          container.appendChild(table)
+        }
+      })
+    }
+
+    // Processar tabelas após cada atualização de mensagens
+    const timeoutId = setTimeout(processTablesAfterRender, 100)
+    return () => clearTimeout(timeoutId)
+  }, [messages])
 
   if (loading) {
     return (
