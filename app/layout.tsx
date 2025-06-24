@@ -1,24 +1,26 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { AuthProvider } from '@/lib/auth-context'
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { AuthProvider } from "@/lib/auth-context"
+
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'Prescreve AI',
-  description: 'Assistente médico com IA',
-  generator: 'v0.dev',
+  title: "Prescreve AI - Assistente Médico Inteligente",
+  description: "Chatbot especializado em prescrições clínicas para médicos e profissionais da saúde",
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html lang="pt-BR">
-      <body>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+      <body className={inter.className}>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   )
