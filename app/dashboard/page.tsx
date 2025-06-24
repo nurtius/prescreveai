@@ -45,30 +45,29 @@ interface Conversation {
 
 // Componente para renderizar HTML da IA de forma segura e responsiva
 function HtmlMedicalResponse({ content }: { content: string }) {
-  // Processar o conteúdo para garantir formatação adequada
-  const processContent = (htmlContent: string) => {
-    let processed = htmlContent
+  const [processedContent, setProcessedContent] = useState("")
 
-    // Garantir que TODOS os títulos médicos principais tenham formatação em negrito
-    processed = processed.replace(
-      /(Orientações gerais|Orientacoes gerais|Medicação$$ões$$ Recomendada$$s$$|Medicacoes Recomendadas|Contraindicações|Contraindicacoes|Efeitos colaterais|Monitoramento|Posologia|Administração|Administracao|Explicação da patologia|Explicacao da patologia|Referências utilizadas|Referencias utilizadas|Diagnóstico|Diagnostico|Tratamento|Conduta|Prognóstico|Prognostico)/gi,
-      '<strong style="font-weight: bold; font-size: 1.1rem; color: #1e293b; display: block; margin: 16px 0 8px 0;">$1</strong>',
-    )
+  useEffect(() => {
+    // Processar o conteúdo HTML
+    let processed = content
 
-    // Garantir que listas tenham formatação adequada com bullets
-    processed = processed.replace(
-      /^[\s]*[-•]\s*(.+)$/gm,
-      '<li style="margin: 4px 0; color: #334155; list-style-type: disc; margin-left: 20px;">$1</li>',
-    )
+    // Se o conteúdo já vem como HTML completo, usar diretamente
+    if (processed.includes("<html>") || processed.includes("<body>")) {
+      // Extrair apenas o conteúdo do body
+      const bodyMatch = processed.match(/<body[^>]*>([\s\S]*?)<\/body>/i)
+      if (bodyMatch) {
+        processed = bodyMatch[1]
+      }
+    }
 
-    // Envolver listas em ul
-    processed = processed.replace(
-      /(<li[^>]*>.*?<\/li>)/gs,
-      '<ul style="margin: 8px 0; padding-left: 20px; list-style-type: disc;">$1</ul>',
-    )
+    // Limpar tags html e body se existirem
+    processed = processed
+      .replace(/<\/?html[^>]*>/gi, "")
+      .replace(/<\/?body[^>]*>/gi, "")
+      .trim()
 
-    return processed
-  }
+    setProcessedContent(processed)
+  }, [content])
 
   return (
     <Card className="bg-white border-2 border-slate-300 p-4 sm:p-6 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 w-full overflow-hidden">
@@ -77,15 +76,17 @@ function HtmlMedicalResponse({ content }: { content: string }) {
           <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-700" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="medical-response" dangerouslySetInnerHTML={{ __html: processContent(content) }} />
+          <div
+            className="medical-response prose prose-sm max-w-none"
+            dangerouslySetInnerHTML={{ __html: processedContent }}
+          />
 
-          {/* Estilos CSS específicos para a resposta médica */}
-          <style jsx>{`
+          {/* Estilos CSS globais para a resposta médica */}
+          <style jsx global>{`
             .medical-response {
-              color: #1e293b;
+              color: #1e293b !important;
               line-height: 1.6;
               font-size: 14px;
-              overflow: visible;
             }
             
             .medical-response h1,
@@ -94,60 +95,112 @@ function HtmlMedicalResponse({ content }: { content: string }) {
             .medical-response h4 {
               font-weight: bold !important;
               color: #1e293b !important;
-              margin: 16px 0 8px 0;
-            }
-            
-            .medical-response h2 {
-              font-size: 1.2rem;
-            }
-            
-            .medical-response h3 {
-              font-size: 1.1rem;
+              margin: 16px 0 8px 0 !important;
+              font-size: 1.1rem !important;
             }
             
             .medical-response p {
-              margin: 8px 0;
-              color: #334155;
+              margin: 8px 0 !important;
+              color: #334155 !important;
             }
             
             .medical-response strong {
               font-weight: bold !important;
               color: #1e293b !important;
-              display: block;
-              margin: 16px 0 8px 0;
-              font-size: 1.1rem;
             }
             
             .medical-response ul,
             .medical-response ol {
-              margin: 8px 0;
-              padding-left: 20px;
-              list-style-type: disc;
+              margin: 8px 0 !important;
+              padding-left: 20px !important;
+              list-style-type: disc !important;
             }
             
             .medical-response li {
-              margin: 4px 0;
-              color: #334155;
-              list-style-type: disc;
-              display: list-item;
+              margin: 4px 0 !important;
+              color: #334155 !important;
+              list-style-type: disc !important;
+              display: list-item !important;
             }
             
-            /* Container específico para tabelas com scroll horizontal */
-            .medical-response .table-container {
-              overflow-x: auto;
-              -webkit-overflow-scrolling: touch;
-              margin: 16px 0;
-              border: 2px solid #334155;
-              border-radius: 8px;
-            }
-            
+            /* ESTILOS ESPECÍFICOS PARA TABELAS */
             .medical-response table {
-              width: 100%;
-              border-collapse: collapse;
-              margin: 0;
-              font-size: 12px;
-              min-width: 500px;
-              background: white;
+              width: 100% !important;
+              border-collapse: collapse !important;
+              margin: 16px 0 !important;
+              font-size: 12px !important;
+              border: 2px solid #334155 !important;
+              background: white !important;
+              display: table !important;
+            }
+            
+            .medical-response th,
+            .medical-response td {
+              border: 2px solid #475569 !important;
+              padding: 12px 8px !important;
+              text-align: left !important;
+              vertical-align: top !important;
+              word-wrap: break-word !important;
+              line-height: 1.4 !important;
+              background-color: white !important;
+            }
+            
+            .medical-response th {
+              background-color: #f1f5f9 !important;
+              font-weight: bold !important;
+              color: #1e293b !important;
+              font-size: 13px !important;
+            }
+            
+            .medical-response td {
+              color: #1e293b !important;
+              font-weight: 500 !important;
+            }
+            
+            /* Responsividade para mobile - SCROLL APENAS NA TABELA */
+            @media (max-width: 639px) {
+              .medical-response {
+                font-size: 13px;
+              }
+              
+              .medical-response table {
+                min-width: 500px !important;
+                font-size: 11px !important;
+                display: block !important;
+                overflow-x: auto !important;
+                white-space: nowrap !important;
+                -webkit-overflow-scrolling: touch !important;
+                border: 2px solid #334155 !important;
+                border-radius: 8px !important;
+              }
+              
+              .medical-response thead,
+              .medical-response tbody,
+              .medical-response tr {
+                display: table !important;
+                width: 100% !important;
+                table-layout: fixed !important;
+              }
+              
+              .medical-response th,
+              .medical-response td {
+                padding: 8px 6px !important;
+                font-size: 10px !important;
+                min-width: 120px !important;
+                border: 1px solid #475569 !important;
+                white-space: normal !important;
+                word-wrap: break-word !important;
+              }
+              
+              .medical-response th:first-child,
+              .medical-response td:first-child {
+                min-width: 150px !important;
+                position: sticky !important;
+                left: 0 !important;
+                background-color: #f8fafc !important;
+                z-index: 2 !important;
+                border-right: 2px solid #334155 !important;
+              }
             }
             
             @media (min-width: 640px) {
@@ -156,111 +209,21 @@ function HtmlMedicalResponse({ content }: { content: string }) {
               }
               
               .medical-response table {
-                font-size: 13px;
-                min-width: auto;
+                font-size: 13px !important;
+                min-width: auto !important;
+                display: table !important;
+                overflow-x: visible !important;
               }
               
-              .medical-response .table-container {
-                overflow-x: visible;
-              }
-            }
-            
-            .medical-response th,
-            .medical-response td {
-              border: 1px solid #475569 !important;
-              padding: 8px 6px;
-              text-align: left;
-              vertical-align: top;
-              word-wrap: break-word;
-              line-height: 1.3;
-              background-clip: padding-box;
-            }
-            
-            @media (min-width: 640px) {
               .medical-response th,
               .medical-response td {
-                padding: 10px 8px;
-              }
-            }
-            
-            .medical-response th {
-              background-color: #f1f5f9 !important;
-              font-weight: bold !important;
-              color: #1e293b !important;
-              font-size: 11px;
-              border: 1px solid #475569 !important;
-            }
-            
-            @media (min-width: 640px) {
-              .medical-response th {
-                font-size: 12px;
-              }
-            }
-            
-            .medical-response td {
-              background-color: white !important;
-              color: #1e293b !important;
-              font-weight: 500;
-              border: 1px solid #475569 !important;
-            }
-            
-            /* Responsividade específica para mobile */
-            @media (max-width: 639px) {
-              .medical-response th,
-              .medical-response td {
-                min-width: 80px;
-                font-size: 10px;
-                padding: 6px 4px;
-                white-space: nowrap;
-              }
-              
-              .medical-response th:first-child,
-              .medical-response td:first-child {
-                min-width: 90px;
-                position: sticky;
-                left: 0;
-                background-color: #f8fafc !important;
-                z-index: 1;
-                border-right: 2px solid #475569 !important;
-              }
-              
-              .medical-response th:nth-child(2),
-              .medical-response td:nth-child(2) {
-                min-width: 70px;
-              }
-              
-              .medical-response th:nth-child(3),
-              .medical-response td:nth-child(3) {
-                min-width: 120px;
-              }
-              
-              .medical-response th:last-child,
-              .medical-response td:last-child {
-                min-width: 100px;
+                padding: 12px 10px !important;
+                font-size: 13px !important;
+                min-width: auto !important;
+                white-space: normal !important;
               }
             }
           `}</style>
-
-          {/* Script para envolver tabelas em containers com scroll */}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                if (typeof window !== 'undefined') {
-                  setTimeout(() => {
-                    const tables = document.querySelectorAll('.medical-response table');
-                    tables.forEach(table => {
-                      if (!table.parentElement.classList.contains('table-container')) {
-                        const container = document.createElement('div');
-                        container.className = 'table-container';
-                        table.parentNode.insertBefore(container, table);
-                        container.appendChild(table);
-                      }
-                    });
-                  }, 100);
-                }
-              `,
-            }}
-          />
 
           {/* Disclaimer discreto */}
           <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-200">
@@ -338,32 +301,6 @@ export default function DashboardPage() {
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [sidebarOpen])
-
-  // Effect para processar tabelas após renderização
-  useEffect(() => {
-    const processTablesAfterRender = () => {
-      const tables = document.querySelectorAll(".medical-response table")
-      tables.forEach((table) => {
-        if (!table.parentElement?.classList.contains("table-container")) {
-          const container = document.createElement("div")
-          container.className = "table-container"
-          container.style.cssText = `
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            margin: 16px 0;
-            border: 2px solid #334155;
-            border-radius: 8px;
-          `
-          table.parentNode?.insertBefore(container, table)
-          container.appendChild(table)
-        }
-      })
-    }
-
-    // Processar tabelas após cada atualização de mensagens
-    const timeoutId = setTimeout(processTablesAfterRender, 100)
-    return () => clearTimeout(timeoutId)
-  }, [messages])
 
   if (loading) {
     return (
@@ -471,6 +408,7 @@ export default function DashboardPage() {
         respostaLimpa = texto
       }
 
+      // Limpar apenas aspas externas e estrutura JSON, mantendo HTML interno
       respostaLimpa = respostaLimpa
         .replace(/^\s*\{\s*"resposta"\s*:\s*/i, "")
         .replace(/\s*\}\s*$/i, "")
